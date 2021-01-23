@@ -1,33 +1,28 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "29a6fc491824baf219c91fde3f4aa03909fd387f30e160f280a843d2604994df"
+            "sha256": "96bc17f35233a190e26297a3d8e608aca037a2df3261da2273284ab27d8eebbd"
         },
         "pipfile-spec": 6,
         "requires": {
-            "python_version": "3.8"
+            "python_version": "3.9"
         },
         "sources": [
             {
                 "name": "pypi",
-                "url": "https://pypi.org/simple",
+                "url": "https://pypi.tuna.tsinghua.edu.cn/simple",
                 "verify_ssl": true
             }
         ]
     },
     "default": {
-        "et-xmlfile": {
+        "csv23": {
             "hashes": [
-                "sha256:614d9722d572f6246302c4491846d2c393c199cfa4edc9af593437691683335b"
+                "sha256:79405c099f1e8377ab893ffbfcae4c9cb408af1808e63fbf22be24983d38f266",
+                "sha256:a33cc86b7c871fde3708c272ae1f6d496b0441d5dd0327ada1424e12af8a8bbe"
             ],
-            "version": "==1.0.1"
-        },
-        "jdcal": {
-            "hashes": [
-                "sha256:1abf1305fce18b4e8aa248cf8fe0c56ce2032392bc64bbd61b5dff2a19ec8bba",
-                "sha256:472872e096eb8df219c23f2689fc336668bdb43d194094b5cc1707e1640acfc8"
-            ],
-            "version": "==1.4.1"
+            "index": "pypi",
+            "version": "==0.3.2"
         },
         "jieba": {
             "hashes": [
@@ -35,14 +30,6 @@
             ],
             "index": "pypi",
             "version": "==0.42.1"
-        },
-        "openpyxl": {
-            "hashes": [
-                "sha256:18e11f9a650128a12580a58e3daba14e00a11d9e907c554a17ea016bf1a2c71b",
-                "sha256:f7d666b569f729257082cf7ddc56262431878f602dcc2bc3980775c59439cdab"
-            ],
-            "index": "pypi",
-            "version": "==3.0.5"
         }
     },
     "develop": {}
