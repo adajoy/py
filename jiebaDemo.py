@@ -1,20 +1,42 @@
-# encoding=utf-8
 import jieba
+import csv
 
-# jieba.enable_paddle()# 启动paddle模式。 0.40版之后开始支持，早期版本不支持
-strs=["我来到北京清华大学的食堂","乒乓球拍卖完了","中国科学技术大学","小明硕士毕业于中国科学院计算所，后在日本京都大学深造"]
-for str in strs:
-    seg_list = jieba.cut(str)
-    print("Paddle Mode: " + '/'.join(list(seg_list)))
+def getComments(reader):
+    comments = []
+    for index, row in enumerate(reader):
+        comment = row['comments']
+        comments.append(comment)
+    return comments
 
-seg_list = jieba.cut("我来到北京清华大学", cut_all=True)
-print("Full Mode: " + "/ ".join(seg_list))  # 全模式
+def splitComments(comments):
+    words = {}
+    for comment in comments:
+        seg_list = jieba.cut(comment)
+        for word in seg_list:
+            if word == '\r\n':
+                continue
+            if word not in words.keys():
+                words[word] = {}
+                words[word]['count'] = 1
+            words[word]['count'] += 1
+    return words
 
-seg_list = jieba.cut("我来到北京清华大学", cut_all=False)
-print("Default Mode: " + "/ ".join(seg_list))  # 精确模式
+def orderWords(words):
+    arr = []
+    for item in words.items():
+        arr.append((item[0],item[1]['count']))
+    return sorted(arr, key=lambda x:x[1], reverse=True)
 
-seg_list = jieba.cut("他来到了网易杭研大厦")  # 默认是精确模式
-print(", ".join(seg_list))
-
-seg_list = jieba.cut_for_search("小明硕士毕业于中国科学院计算所，后在日本京都大学深造")  # 搜索引擎模式
-print(", ".join(seg_list))
+with open('filtered.csv', newline='', encoding='utf-8') as f:
+    reader = csv.DictReader(f)
+    allComments = getComments(reader)
+    words = splitComments(allComments)
+    orderedWords = orderWords(words)
+    
+    f = open('count.csv', 'w', encoding='utf-8', newline='')
+    csv_writer = csv.writer(f)
+    csv_writer.writerow(['word', 'count'])
+    for item in orderedWords:
+        if (item[0] is not None) & (item[1] is not None):
+            csv_writer.writerow([item[0], str(item[1])])
+    f.close()
