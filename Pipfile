@@ -6,6 +6,7 @@ name = "pypi"
 [packages]
 jieba = "*"
 csv23 = "*"
+openpyxl = "*"
 
 [dev-packages]
 
