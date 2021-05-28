@@ -69,8 +69,7 @@ def unwarpComments(dict):
 def writeCSV(comments):
     f = open('filtered.csv', 'w', encoding='utf-8', newline='')
     csv_writer = csv.writer(f)
-    csv_writer.writerow(['listing_id', 'id', 'date',
-                         'reviewer_id', 'reviewer_name', 'comments'])
+    csv_writer.writerow(['listing_id', 'location', 'date', 'comments'])
     rows = []
     for obj in comments:
         valueList = []

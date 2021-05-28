@@ -39,8 +39,7 @@ def calcScore(keywords, creditDicts, comment):
 def writeCSV(comments):
     f = open('withCredit.csv', 'w', encoding='utf-8', newline='')
     csv_writer = csv.writer(f)
-    csv_writer.writerow(['listing_id', 'id', 'date',
-                         'reviewer_id', 'reviewer_name', 'comments', '总体评价', '价格', '如实描述', '房东态度', '沟通交流', '办理入住', '房源特色', '房源环境', '房源设施', '位置便利程度', '他人推荐'])
+    csv_writer.writerow(['listing_id', 'location', 'date', 'comments', '总体评价', '价格', '如实描述', '房东态度', '沟通交流', '办理入住', '房源特色', '房源环境', '房源设施', '位置便利程度', '他人推荐'])
     rows = []
     for obj in comments:
         valueList = []

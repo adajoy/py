@@ -7,6 +7,8 @@ name = "pypi"
 jieba = "*"
 csv23 = "*"
 openpyxl = "*"
+wordcloud = "*"
+matplotlib = "*"
 
 [dev-packages]
 
