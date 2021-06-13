@@ -24,9 +24,11 @@ def getCreditDictByWs(ws):
 def calcScore(keywords, creditDicts, comment):
     totalScore = 0
     matchCount = 0
+    found = False
     for word in keywords:
         index = comment.find(word)
         if index >= 0:
+            found = True
             start = index + len(word)
             substr = comment[start : start + 10]
             for tuple in creditDicts:
@@ -34,12 +36,12 @@ def calcScore(keywords, creditDicts, comment):
                     matchCount += 1
                     totalScore += tuple[1]
     avgScore = totalScore if matchCount == 0 else totalScore / matchCount
-    return round(avgScore,2)
+    return round(avgScore,2) if found else 'nan'
 
 def writeCSV(comments):
     f = open('withCredit.csv', 'w', encoding='utf-8', newline='')
     csv_writer = csv.writer(f)
-    csv_writer.writerow(['listing_id', 'location', 'date', 'comments', '总体评价', '价格', '如实描述', '房东态度', '沟通交流', '办理入住', '房源特色', '房源环境', '房源设施', '位置便利程度', '他人推荐'])
+    csv_writer.writerow(['listing_id', 'location', 'date', 'comments', '总体评价', '描述相符', '办理入住', '性格特质', '服务态度', '沟通交流', '房源特色和环境', '房内设施', '交通便利指数', '他人推荐'])
     rows = []
     for obj in comments:
         valueList = []
@@ -59,7 +61,7 @@ with open('filtered.csv', newline='', encoding='utf-8') as f:
         comment = row['comments']
         scores = []
         for sheetname in wb.sheetnames:
-            if sheetname != '他人推荐':
+            if sheetname != 'loy他人推荐':
                 ws = wb[sheetname]
                 keywords = getKeywordsByWs(ws)
                 creditDicts = getCreditDictByWs(ws)
@@ -69,14 +71,16 @@ with open('filtered.csv', newline='', encoding='utf-8') as f:
         comments.append(row)
         if len(comments) % 1000 == 0:
             print(len(comments))
-    wsLast = wb['他人推荐']
+    wsLast = wb['loy他人推荐']
     keyWords = []
     scores = []
     for word in wsLast['A']:
-        keyWords.append(word.value)
+        if word.value is not None:
+            keyWords.append(word.value)
     keyWords.remove(keyWords[0])
-    for scroe in wsLast['B']:
-        scores.append(scroe.value)
+    for score in wsLast['B']:
+        if score.value is not None:
+            scores.append(score.value)
     scores.remove(scores[0])
     scoreMap = list(zip(keyWords, scores))
     for row in comments:
@@ -88,5 +92,5 @@ with open('filtered.csv', newline='', encoding='utf-8') as f:
                 matchCount += 1
                 totalScore += scoreTuple[1]
         avgScore = totalScore if matchCount == 0 else totalScore / matchCount
-        row['他人推荐'] = round(avgScore,2)
+        row['loy他人推荐'] = round(avgScore,2)
     writeCSV(comments)

@@ -87,6 +87,7 @@ with open('reviews_detail.csv', newline='', encoding='utf-8') as f:
     chs = chineseFilter(reader)
     grouped = groupBy('listing_id', chs)
     moreThan5 = moreThanFilter(grouped, 5)
-    latest = latestFilter(moreThan5)
+    # latest = latestFilter(moreThan5)
+    latest = moreThan5
     comments = unwarpComments(latest)
     writeCSV(comments)

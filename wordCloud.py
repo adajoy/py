@@ -13,6 +13,6 @@ with open('count.csv', newline='', encoding='utf-8') as f:
     for row in reader:
       if len(row.get('word')) > 1:
         dict[row.get('word')] = int(row.get('count'))
-    wc = WordCloud(font_path=font_path)
+    wc = WordCloud(font_path=font_path, width=1920, height=1080, background_color='white')
     wc.generate_from_frequencies(dict)
     wc.to_file(path.join(d, 'imgname1.jpg'))
