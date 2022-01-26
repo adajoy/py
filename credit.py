@@ -91,6 +91,7 @@ with open('filtered.csv', newline='', encoding='utf-8') as f:
             if comment.find(scoreTuple[0]) >= 0:
                 matchCount += 1
                 totalScore += scoreTuple[1]
-        avgScore = totalScore if matchCount == 0 else totalScore / matchCount
-        row['loy他人推荐'] = round(avgScore,2)
+        avgScore = 'nan' if matchCount == 0 else totalScore / matchCount
+        row['loy他人推荐'] = avgScore if isinstance(
+            avgScore, str) else round(avgScore, 2)
     writeCSV(comments)

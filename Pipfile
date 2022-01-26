@@ -9,6 +9,7 @@ csv23 = "*"
 openpyxl = "*"
 wordcloud = "*"
 matplotlib = "*"
+geopy = "*"
 
 [dev-packages]
 

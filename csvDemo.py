@@ -6,9 +6,9 @@ import time
 def chineseFilter(reader):
     ret = []
     for row in reader:
-        res = re.search('[\u4e00-\u9fa5]', row['comments'])
-        if res:
-            ret.append(row)
+        # res = re.search('[\u4e00-\u9fa5]', row['comments'])
+        # if res:
+        ret.append(row)
     return ret
 
 
@@ -82,12 +82,11 @@ def writeCSV(comments):
     return
 
 
-with open('reviews_detail.csv', newline='', encoding='utf-8') as f:
+with open('reviews_detail0114.csv', newline='', encoding='utf-8') as f:
     reader = csv.DictReader(f)
     chs = chineseFilter(reader)
     grouped = groupBy('listing_id', chs)
-    moreThan5 = moreThanFilter(grouped, 5)
+    # moreThan5 = moreThanFilter(grouped, 3)
     # latest = latestFilter(moreThan5)
-    latest = moreThan5
-    comments = unwarpComments(latest)
+    comments = unwarpComments(grouped)
     writeCSV(comments)
